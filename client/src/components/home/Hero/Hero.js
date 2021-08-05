@@ -24,15 +24,15 @@ function Hero(props) {
         <Grid item lg={6} md={10} sm={10} xs={12}>
           <Box textAlign="center">
             <h1 className={classes.h1}>
-              Product Information Management made painless
+              Providing Unique Value to Entrepreneurs and Investors
             </h1>
           </Box>
         </Grid>
-        <Grid item lg={4} md={10} sm={10} xs={12}>
+        <Grid item lg={6} md={10} sm={10} xs={12}>
           <Box textAlign="center">
             <h2 className={classes.h2}>
-              Build an accurate, always-available product repository with
-              effortless PIM.
+              We are an Angel-led Investment platform that connects high grow
+              potentional companies with experienced investors.
             </h2>
           </Box>
         </Grid>
