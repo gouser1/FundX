@@ -5,6 +5,7 @@ export default makeStyles(() => ({
     flexGrow: 1,
     marginLeft: "5%",
     marginRight: "5%",
+    marginBottom: "15%",
   },
   typography: {
     fontFamily: "'Karla', sans-serif;",
@@ -34,7 +35,7 @@ export default makeStyles(() => ({
   p1: {
     textAlign: "left",
     fontFamily: "'Rubik', sans-serif;",
-    fontSize: "1.6em",
+    fontSize: "1.3em",
     color: "#22303d",
     letterSpacing: "0.02em",
     lineHeight: "1.4em",

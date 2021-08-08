@@ -6,7 +6,12 @@ function Features(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Grid container>
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
+      >
         <Grid item xs={12}>
           <Box className={classes.box} textAlign="center">
             <h1 className={classes.h1}>How does it work?</h1>
