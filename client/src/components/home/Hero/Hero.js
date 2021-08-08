@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Grid, Paper, Box, Button, Icon } from "@material-ui/core";
+import { Grid, Box, Button } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import useStyles from "./HeroStyle";
 
@@ -22,7 +22,7 @@ function Hero(props) {
         style={{ minHeight: "50vh" }}
       >
         <Grid item lg={6} md={10} sm={10} xs={12}>
-          <Box textAlign="center">
+          <Box textAlign="center" pt={10}>
             <h1 className={classes.h1}>
               Providing Unique Value to Entrepreneurs and Investors
             </h1>
