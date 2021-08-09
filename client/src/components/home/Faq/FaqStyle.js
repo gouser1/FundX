@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 export default makeStyles(() => ({
   root: {
     flexGrow: 1,
+    paddingBottom: "15%",
   },
   typography: {
     fontFamily: "'Karla', sans-serif;",
@@ -26,7 +27,7 @@ export default makeStyles(() => ({
     color: "#22303d",
     fontWeight: "700",
     "@media (min-width:700px)": {
-      fontSize: "3rem",
+      fontSize: "3em",
     },
   },
   h2: {
