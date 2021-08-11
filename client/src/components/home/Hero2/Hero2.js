@@ -37,7 +37,7 @@ function Hero(props) {
         <Grid item xs={12}>
           <Box textAlign="center" pt={2}>
             <Button
-              onClick={() => handleButtonClick("/")}
+              onClick={() => handleButtonClick("/register")}
               className={classes.button}
             >
               Find out more!

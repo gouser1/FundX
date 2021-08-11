@@ -57,11 +57,7 @@ function NavBar(props) {
       <AppBar className={classes.appBar} style={{ margin: 0 }}>
         <Toolbar>
           <Box display="flex" m={3} flexGrow={1}>
-            <LogoButton
-              component={Link}
-              to="/home"
-              style={{ backgroundColor: "transparent" }}
-            >
+            <LogoButton to="/login" style={{ backgroundColor: "transparent" }}>
               <img src={LogoNav} alt="" width="130px" height="35px" />
             </LogoButton>
           </Box>
@@ -104,7 +100,7 @@ function NavBar(props) {
                   </MenuItem>
                   <MenuItem
                     style={{ color: "white", backgroundColor: "#3bc693" }}
-                    onClick={() => handleMenuClick("/")}
+                    onClick={() => handleMenuClick("/login")}
                   >
                     Login
                   </MenuItem>
@@ -133,7 +129,7 @@ function NavBar(props) {
                   </NavButton>
                 </Box>
                 <Box m={1} pt={2}>
-                  <NavButton onClick={() => handleButtonClick("/")}>
+                  <NavButton onClick={() => handleButtonClick("/login")}>
                     Login
                   </NavButton>
                 </Box>
@@ -142,7 +138,7 @@ function NavBar(props) {
                     variant="contained"
                     className={classes.button}
                     style={{ color: "white" }}
-                    onClick={() => handleButtonClick("/")}
+                    onClick={() => handleButtonClick("/register")}
                   >
                     Get Started
                   </NavButton>
