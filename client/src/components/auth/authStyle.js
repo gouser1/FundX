@@ -47,7 +47,7 @@ export default makeStyles(() => ({
     width: 280,
     margin: '20px auto',
   },
-  avatarStyle: { backgroundColor: '#1bbd7e' },
+  avatarStyle: { backgroundColor: '#3bc693' },
 
   textfield: {
     fontFamily: "'Karla', sans-serif;",

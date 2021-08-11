@@ -74,7 +74,7 @@ const Login = (props) => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
-                    <Email />
+                    <Email style={{ fill: '#c8c8c8' }} />
                   </InputAdornment>
                 ),
               }}
@@ -91,7 +91,7 @@ const Login = (props) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  <LockIcon />
+                  <LockIcon style={{ fill: '#c8c8c8' }} />
                 </InputAdornment>
               ),
             }}
