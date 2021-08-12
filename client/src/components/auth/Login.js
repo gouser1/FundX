@@ -115,12 +115,24 @@ const Login = (props) => {
             I am a new user
             <Link
               href='#'
+              to='/register'
               onClick={() => handleChange('event', 1)}
               style={{ textDecoration: 'none' }}
             >
               and I want to Sign Up
             </Link>
           </Typography>
+          <Box pt={2}>
+            <Typography className={classes.textfield}>
+              <Link
+                href='#'
+                onClick={() => handleChange('event', 1)}
+                style={{ textDecoration: 'none' }}
+              >
+                Continue as a guest.
+              </Link>
+            </Typography>
+          </Box>
         </Paper>
       </Grid>
     </div>

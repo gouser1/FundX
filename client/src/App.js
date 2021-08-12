@@ -7,6 +7,9 @@ import Faq from './components/home/Faq/Faq';
 import Support from './components/home/Support/Support';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import EmailConfirm from './components/auth/EmailConfirm';
+import EmailRecovery from './components/auth/EmailRecovery';
+import Dashboard from './components/dashboard/Dashboard/Dashboard';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //import { Hello } from './components/hello';
@@ -28,7 +31,11 @@ class App extends Component {
               <Route path='/' exact component={NavBar} />
               <Route path='/login' exact component={Login} />
               <Route path='/register' exact component={Register} />
+              <Route path='/confirmemail' exact component={EmailConfirm} />
+              <Route path='/recoverpassword' exact component={EmailRecovery} />
+              <Route path='/dashboard' exact component={Dashboard} />
             </Switch>
+
             <Route path='/' exact component={Hero} />
             <Route path='/' exact component={Features} />
             <Route path='/' exact component={Hero2} />

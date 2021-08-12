@@ -154,6 +154,17 @@ const Register = (props) => {
               Click here.
             </Link>
           </Typography>
+          <Box pt={2}>
+            <Typography className={classes.textfield}>
+              <Link
+                href='#'
+                onClick={() => handleChange('event', 1)}
+                style={{ textDecoration: 'none' }}
+              >
+                Continue as a guest.
+              </Link>
+            </Typography>
+          </Box>
         </Paper>
       </Grid>
     </div>
