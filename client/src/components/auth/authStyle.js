@@ -47,6 +47,15 @@ export default makeStyles(() => ({
     width: 280,
     margin: '20px auto',
   },
+  paper2: {
+    padding: 20,
+    height: '60vh',
+    '@media (max-width:800px)': {
+      height: '80vh',
+    },
+    width: 280,
+    margin: '20px auto',
+  },
   avatarStyle: { backgroundColor: '#3bc693' },
 
   textfield: {
