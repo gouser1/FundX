@@ -1,7 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
 import { Grid, Box, Button } from "@material-ui/core";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import useStyles from "./Hero2Style";
 
 function Hero(props) {

@@ -27,17 +27,11 @@ const Login = (props) => {
     color: 'white',
     backgroundColor: '#3bc693',
   };
-  const handleButtonClick = (pageURL) => {
+  const handleLinkClick = (pageURL) => {
     history.push(pageURL);
   };
 
   const classes = useStyles();
-
-  const [value, setValue] = React.useState('Login');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const LogoButton = withStyles(() => ({}))(IconButton);
 
@@ -51,7 +45,10 @@ const Login = (props) => {
         justify='center'
         style={{ minHeight: '100vh' }}
       >
-        <LogoButton to='/' style={{ backgroundColor: 'transparent' }}>
+        <LogoButton
+          onClick={() => handleLinkClick('/')}
+          style={{ backgroundColor: 'transparent' }}
+        >
           <img src={LogoNav} alt='' width='130px' height='35px' />
         </LogoButton>
         <Paper elevation={10} className={classes.paper}>
@@ -106,27 +103,28 @@ const Login = (props) => {
             Sign in
           </Button>
           <Typography className={classes.textfield}>
-            <Link href='#' style={{ textDecoration: 'none' }}>
+            <Link
+              href='#'
+              onClick={() => handleLinkClick('/recoverpassword')}
+              style={{ textDecoration: 'none' }}
+            >
               Forgot password?
             </Link>
           </Typography>
           <Typography className={classes.textfield}>
-            {' '}
-            I am a new user
             <Link
               href='#'
-              to='/register'
-              onClick={() => handleChange('event', 1)}
+              onClick={() => handleLinkClick('/register')}
               style={{ textDecoration: 'none' }}
             >
-              and I want to Sign Up
+              I am a new user and I want to Sign Up
             </Link>
           </Typography>
           <Box pt={2}>
             <Typography className={classes.textfield}>
               <Link
                 href='#'
-                onClick={() => handleChange('event', 1)}
+                onClick={() => handleLinkClick('/')}
                 style={{ textDecoration: 'none' }}
               >
                 Continue as a guest.

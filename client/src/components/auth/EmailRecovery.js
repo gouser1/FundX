@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {
   Grid,
   Box,
@@ -18,17 +18,11 @@ import useStyles from './authStyle';
 const EmailConfirm = (props) => {
   const { history } = props;
 
-  const handleButtonClick = (pageURL) => {
+  const handleLinkClick = (pageURL) => {
     history.push(pageURL);
   };
 
   const classes = useStyles();
-
-  const [value, setValue] = React.useState('Login');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const LogoButton = withStyles(() => ({}))(IconButton);
 
@@ -42,7 +36,10 @@ const EmailConfirm = (props) => {
         justify='center'
         style={{ minHeight: '100vh' }}
       >
-        <LogoButton to='/' style={{ backgroundColor: 'transparent' }}>
+        <LogoButton
+          onClick={() => handleLinkClick('/')}
+          style={{ backgroundColor: 'transparent' }}
+        >
           <img src={LogoNav} alt='' width='130px' height='35px' />
         </LogoButton>
         <Paper elevation={10} className={classes.paper4}>
@@ -76,7 +73,7 @@ const EmailConfirm = (props) => {
             <Box textAlign='center'>
               <Button
                 fullWidth
-                onClick={() => handleButtonClick('/register')}
+                onClick={() => handleLinkClick('/')}
                 className={classes.button}
               >
                 Reset Password

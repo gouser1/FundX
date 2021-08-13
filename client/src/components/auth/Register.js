@@ -8,8 +8,6 @@ import {
   TextField,
   InputAdornment,
   Avatar,
-  FormControlLabel,
-  Checkbox,
   Typography,
   withStyles,
   IconButton,
@@ -28,17 +26,11 @@ const Register = (props) => {
     color: 'white',
     backgroundColor: '#3bc693',
   };
-  const handleButtonClick = (pageURL) => {
+  const handleLinkClick = (pageURL) => {
     history.push(pageURL);
   };
 
   const classes = useStyles();
-
-  const [value, setValue] = React.useState('Login');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const LogoButton = withStyles(() => ({}))(IconButton);
 
@@ -53,7 +45,13 @@ const Register = (props) => {
         style={{ minHeight: '100vh' }}
       >
         <LogoButton to='/' style={{ backgroundColor: 'transparent' }}>
-          <img src={LogoNav} alt='' width='130px' height='35px' />
+          <img
+            src={LogoNav}
+            alt=''
+            width='130px'
+            height='35px'
+            onClick={() => handleLinkClick('/')}
+          />
         </LogoButton>
         <Paper elevation={10} className={classes.paper2}>
           <Grid align='center'>
@@ -148,7 +146,7 @@ const Register = (props) => {
             Already have an account? <br></br>
             <Link
               href='#'
-              onClick={() => handleChange('event', 1)}
+              onClick={() => handleLinkClick('/login')}
               style={{ textDecoration: 'none' }}
             >
               Click here.
@@ -156,11 +154,7 @@ const Register = (props) => {
           </Typography>
           <Box pt={2}>
             <Typography className={classes.textfield}>
-              <Link
-                href='#'
-                onClick={() => handleChange('event', 1)}
-                style={{ textDecoration: 'none' }}
-              >
+              <Link href='#' style={{ textDecoration: 'none' }}>
                 Continue as a guest.
               </Link>
             </Typography>
