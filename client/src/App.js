@@ -33,7 +33,7 @@ class App extends Component {
               <Route path='/register' exact component={Register} />
               <Route path='/confirmemail' exact component={EmailConfirm} />
               <Route path='/recoverpassword' exact component={EmailRecovery} />
-              <Route path='/dashboard' exact component={Dashboard} />
+              <Route path='/dashboard' component={Dashboard} />
             </Switch>
 
             <Route path='/' exact component={Hero} />
