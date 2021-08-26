@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import axios from 'axios';
 import NavBar from './components/home/NavBar/NavBar';
 import Hero from './components/home/Hero/Hero';
 import Features from './components/home/Features/Features';
@@ -12,7 +13,8 @@ import EmailRecovery from './components/auth/EmailRecovery';
 import Dashboard from './components/dashboard/Dashboard/Dashboard';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-//import { Hello } from './components/hello';
+import { AuthContext } from './helpers/AuthContext';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -21,11 +23,24 @@ const theme = createTheme({
   },
 });
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <ThemeProvider theme={theme}>
+const App = (props) => {
+  const [authState, setAuthState] = useState(false);
+  // const [userList, setUserList] = useState([]);
+  // useEffect(() => {
+  //   axios.get('http://localhost:3001/users').then((response) => {
+  //     setUserList(response.data);
+  //   });
+  // }, []);
+
+  return (
+    // // Displays users first name using .map
+    <div>
+      {/* {userList.map((value, key) => {
+         return <div> {value.firstName} </div>;
+       })} */}
+
+      <ThemeProvider theme={theme}>
+        <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
             <Switch>
               <Route path='/' exact component={NavBar} />
@@ -42,10 +57,10 @@ class App extends Component {
             <Route path='/' exact component={Faq} />
             <Route path='/' exact component={Support} />
           </Router>
-        </ThemeProvider>
-      </div>
-    );
-  }
-}
+        </AuthContext.Provider>
+      </ThemeProvider>
+    </div>
+  );
+};
 
 export default App;

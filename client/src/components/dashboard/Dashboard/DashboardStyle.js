@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 export default makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    margin: 0,
   },
   typography: {
     fontFamily: "'Karla', sans-serif;",

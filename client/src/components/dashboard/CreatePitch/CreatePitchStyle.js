@@ -31,10 +31,7 @@ export default makeStyles(() => ({
   },
   h2: {
     fontFamily: "'Rubik', sans-serif;",
-    fontSize: "1.2em",
-    color: "#46637f",
-    "@media (min-width:700px)": {
-      fontSize: "1.6rem",
-    },
+    fontSize: "1em",
+    color: "black",
   },
 }));

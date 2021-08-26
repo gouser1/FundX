@@ -62,7 +62,7 @@ export default makeStyles(() => ({
   },
   paper: {
     padding: 20,
-    height: '45vh',
+    height: '50vh',
     '@media (max-width:800px)': {
       height: '60vh',
     },
@@ -71,7 +71,7 @@ export default makeStyles(() => ({
   },
   paper2: {
     padding: 20,
-    height: '60vh',
+    height: '70vh',
     '@media (max-width:800px)': {
       height: '80vh',
     },

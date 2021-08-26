@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "./SupportStyle";
 
-function Features(props) {
+function Support(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleButtonClick = () => {
@@ -124,4 +124,4 @@ function Features(props) {
   );
 }
 
-export default Features;
+export default Support;
