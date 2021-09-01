@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Grid, Container } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -12,11 +12,13 @@ import locations from "../../../data/locations.json";
 import industries from "../../../data/industries.json";
 import investmentRoles from "../../../data/investmentRoles.json";
 import capitalAmounts from "../../../data/capitalAmounts.json";
+import { AuthContext } from "../../../helpers/AuthContext";
 import useStyles from "./CreatePitchStyle";
 
 function CreatePitch(props) {
   let history = useHistory();
   const classes = useStyles();
+  const { authState } = useContext(AuthContext);
 
   const INITIAL_FORM_STATE = {
     pitchTitle: "",
@@ -31,13 +33,19 @@ function CreatePitch(props) {
     pitchInfo: "",
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/login");
+    }
+  }, []);
+
   const FORM_VALIDATION = Yup.object().shape({
     pitchTitle: Yup.string().required("Required").max(25).min(10),
     website: Yup.string().max(100),
     location: Yup.string().required("Required"),
     country: Yup.string().required("Required"),
     industry: Yup.string().required("Required"),
-    industry2: Yup.string().required("Required"),
+    industry2: Yup.string(),
     idealInvestmentRole: Yup.string().required("Required"),
     capitalNeeded: Yup.string().required("Required"),
     capitalRaised: Yup.string().required("Required"),
@@ -46,15 +54,15 @@ function CreatePitch(props) {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid item xs={10} lg={6} style={{ paddingTop: "2%" }}>
         <Container maxWidth="md">
           <div className={classes.formWrapper}>
             <Formik
               initialValues={INITIAL_FORM_STATE}
               validationSchema={FORM_VALIDATION}
-              onSubmit={(values) => {
+              onSubmit={(data) => {
                 axios
-                  .post("http://localhost:3001/pitches", values, {
+                  .post("http://localhost:3001/pitches", data, {
                     headers: {
                       accessToken: localStorage.getItem("accessToken"),
                     },
@@ -104,13 +112,47 @@ function CreatePitch(props) {
                     ></Select>
 
                     <h2 className={classes.h2}> Pitch Info</h2>
-                    <Textfield multiline rows={6} name="pitchInfo"></Textfield>
+                    <Textfield
+                      multiline
+                      rows={6}
+                      name="pitchInfo"
+                      style={{ paddingBottom: "2%" }}
+                    ></Textfield>
 
                     <Button> Post Listing</Button>
                   </Grid>
                 </Grid>
               </Form>
             </Formik>
+          </div>
+        </Container>
+      </Grid>
+      <Grid item xs={10} lg={6} style={{ paddingTop: "2%" }}>
+        <Container maxWidth="md">
+          <div className={classes.formWrapper}>
+            <Grid container spacing={5}>
+              <Grid item xs={12}>
+                <h2 className={classes.h2}> Pitch Title</h2>
+
+                <h2 className={classes.h2}> Website (Optional)</h2>
+
+                <h2 className={classes.h2}> Location</h2>
+
+                <h2 className={classes.h2}> Country</h2>
+
+                <h2 className={classes.h2}> Industry</h2>
+
+                <h2 className={classes.h2}> Industry 2</h2>
+
+                <h2 className={classes.h2}> Ideal Investment Role</h2>
+
+                <h2 className={classes.h2}> Capital needed</h2>
+
+                <h2 className={classes.h2}> Capital raised</h2>
+
+                <h2 className={classes.h2}> Pitch Info</h2>
+              </Grid>
+            </Grid>
           </div>
         </Container>
       </Grid>

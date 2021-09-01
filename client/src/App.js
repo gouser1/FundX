@@ -11,6 +11,7 @@ import Register from './components/auth/Register';
 import EmailConfirm from './components/auth/EmailConfirm';
 import EmailRecovery from './components/auth/EmailRecovery';
 import Dashboard from './components/dashboard/Dashboard/Dashboard';
+import PageNotFound from './components/dashboard/PageNotFound/PageNotFound';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthContext } from './helpers/AuthContext';
@@ -24,21 +25,14 @@ const theme = createTheme({
 });
 
 const App = (props) => {
-  const [authState, setAuthState] = useState(false);
-  // const [userList, setUserList] = useState([]);
-  // useEffect(() => {
-  //   axios.get('http://localhost:3001/users').then((response) => {
-  //     setUserList(response.data);
-  //   });
-  // }, []);
+  const [authState, setAuthState] = useState({
+    displaynamer: '',
+    id: 0,
+    status: false,
+  });
 
   return (
-    // // Displays users first name using .map
     <div>
-      {/* {userList.map((value, key) => {
-         return <div> {value.firstName} </div>;
-       })} */}
-
       <ThemeProvider theme={theme}>
         <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
@@ -49,6 +43,7 @@ const App = (props) => {
               <Route path='/confirmemail' exact component={EmailConfirm} />
               <Route path='/recoverpassword' exact component={EmailRecovery} />
               <Route path='/dashboard' component={Dashboard} />
+              <Route path='/*' exact component={PageNotFound} />
             </Switch>
 
             <Route path='/' exact component={Hero} />

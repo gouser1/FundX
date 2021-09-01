@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -19,6 +19,11 @@ export default makeStyles(() => ({
     },
     textTransform: "none",
   },
+  container: {
+    paddingTop: "5vh",
+    backgroundColor: "white",
+    color: "#555",
+  },
   h1: {
     textAlign: "center",
     fontFamily: "'Karla', sans-serif;",
@@ -35,6 +40,21 @@ export default makeStyles(() => ({
     color: "#46637f",
     "@media (min-width:700px)": {
       fontSize: "1.6rem",
+    },
+  },
+  favourite: {
+    color: "green",
+  },
+  badge: {
+    marginRight: "5em",
+  },
+  card: {
+    marginBottom: theme.spacing(5),
+  },
+  media: {
+    height: 250,
+    [theme.breakpoints.down("sm")]: {
+      height: 150,
     },
   },
 }));

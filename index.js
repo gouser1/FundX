@@ -15,6 +15,9 @@ app.use('/auth', userRouter);
 const postRouter = require('./routes/pitches');
 app.use('/pitches', postRouter);
 
+const favouritesRouter = require('./routes/favourites');
+app.use('/favourite', favouritesRouter);
+
 // listen to port and check models for tables
 
 db.sequelize.sync().then(() => {

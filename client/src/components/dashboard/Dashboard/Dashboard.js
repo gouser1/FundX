@@ -18,15 +18,17 @@ import Create from "@material-ui/icons/Create";
 import Favorite from "@material-ui/icons/Favorite";
 import Person from "@material-ui/icons/Person";
 import ExitToApp from "@material-ui/icons/ExitToApp";
-import { Route, useHistory } from "react-router-dom";
+import { Route, useHistory, Switch } from "react-router-dom";
 import LogoNav from "../../../images/dashboard/LogoNav.png";
 import Pitches from "../Pitches/Pitches";
 import CreatePitch from "../CreatePitch/CreatePitch";
 import useStyles from "./DashboardStyle";
 import Favourites from "../Favourites/Favourites";
 import Messages from "../Messages/Messages";
+import EditProfile from "../Profile/EditProfile";
 import Profile from "../Profile/Profile";
 import SinglePitch from "../SinglePitch/SinglePitch";
+import PageNotFound from "../PageNotFound/PageNotFound";
 import { AuthContext } from "../../../helpers/AuthContext";
 import axios from "axios";
 
@@ -34,7 +36,11 @@ function Dashboard(props) {
   const history = useHistory();
   const classes = useStyles();
 
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    displayName: "",
+    id: 0,
+    status: false,
+  });
 
   useEffect(() => {
     axios
@@ -43,9 +49,13 @@ function Dashboard(props) {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
+          setAuthState({
+            displayName: response.data.displayName,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
   }, []);
@@ -55,6 +65,16 @@ function Dashboard(props) {
       "&:hover": {},
     },
   }))(IconButton);
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      displayName: "",
+      id: 0,
+      status: false,
+    });
+    history.push("/");
+  };
 
   return (
     <div>
@@ -66,7 +86,7 @@ function Dashboard(props) {
                 <img src={LogoNav} alt="" width="130px" height="35px" />
               </LogoButton>
             </Box>
-            {localStorage.getItem("accessToken") && (
+            {authState.status && (
               <>
                 <Box className={classes.icons}>
                   <Badge
@@ -91,7 +111,7 @@ function Dashboard(props) {
         </AppBar>
 
         <Grid container>
-          <Grid item xs={1.5}>
+          <Grid item xs={2}>
             <Container className={classes.container}>
               <Box className={classes.containerItem}>
                 <Home
@@ -107,7 +127,7 @@ function Dashboard(props) {
                   </h1>
                 </Hidden>
               </Box>
-              {authState && (
+              {authState.status && (
                 <>
                   <Box className={classes.containerItem}>
                     <Create
@@ -154,12 +174,12 @@ function Dashboard(props) {
                   <Box className={classes.containerItem}>
                     <Person
                       className={classes.icon}
-                      onClick={() => history.push("/dashboard/profile")}
+                      onClick={() => history.push("/dashboard/editprofile")}
                     />
                     <Hidden smDown>
                       <h1
                         className={classes.h1}
-                        onClick={() => history.push("/dashboard/profile")}
+                        onClick={() => history.push("/dashboard/editprofile")}
                       >
                         Profile
                       </h1>
@@ -167,14 +187,18 @@ function Dashboard(props) {
                   </Box>
 
                   <Box className={classes.containerItem}>
-                    <ExitToApp className={classes.icon} />
+                    <ExitToApp className={classes.icon} onClick={logout} />
                     <Hidden smDown>
-                      <h1 className={classes.h1}>Logout</h1>
+                      <h1 className={classes.h1} onClick={logout}>
+                        Logout
+                      </h1>
                     </Hidden>
                   </Box>
+                  {/* <h1>{authState.displayName}</h1> */}
                 </>
               )}
-              {!authState && (
+
+              {!authState.status && (
                 <>
                   <Box className={classes.containerItem}>
                     <ExitToApp
@@ -194,18 +218,35 @@ function Dashboard(props) {
               )}
             </Container>
           </Grid>
-          <Grid grid item xs={10.5}>
-            <Route path="/dashboard/pitches" exact component={Pitches} />
-            <Route
-              path="/dashboard/createpitch"
-              exact
-              component={CreatePitch}
-            />
-            <Route path="/dashboard/pitch/:id" exact component={SinglePitch} />
+          <Grid grid item xs={10}>
+            <Switch>
+              <Route path="/dashboard/pitches" exact component={Pitches} />
+              <Route
+                path="/dashboard/createpitch"
+                exact
+                component={CreatePitch}
+              />
+              <Route
+                path="/dashboard/pitch/:id"
+                exact
+                component={SinglePitch}
+              />
 
-            <Route path="/dashboard/favourites" exact component={Favourites} />
-            <Route path="/dashboard/messages" exact component={Messages} />
-            <Route path="/dashboard/profile" exact component={Profile} />
+              <Route
+                path="/dashboard/favourites"
+                exact
+                component={Favourites}
+              />
+              <Route path="/dashboard/messages" exact component={Messages} />
+              <Route path="/dashboard/profile/:id" exact component={Profile} />
+
+              <Route
+                path="/dashboard/editprofile"
+                exact
+                component={EditProfile}
+              />
+              <Route path="*" exact component={PageNotFound} />
+            </Switch>
           </Grid>
         </Grid>
       </AuthContext.Provider>

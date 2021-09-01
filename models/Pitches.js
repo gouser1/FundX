@@ -51,6 +51,9 @@ module.exports = (sequelize, DataTypes) => {
     Pitches.belongsTo(models.Users, {
       foreignKey: {},
     });
+    Pitches.hasMany(models.Favourites, {
+      onDelete: 'cascade',
+    });
   };
 
   return Pitches;

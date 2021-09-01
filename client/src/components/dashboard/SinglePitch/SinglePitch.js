@@ -1,16 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Button } from "@material-ui/core";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../../helpers/AuthContext";
 
 const SingleListing = () => {
   let { id } = useParams();
   const [pitchObject, setPitchObject] = useState({});
+  const { authState } = useContext(AuthContext);
+  let history = useHistory();
 
   useEffect(() => {
     axios.get(`http://localhost:3001/pitches/byId/${id}`).then((response) => {
       setPitchObject(response.data);
     });
   }, [id]);
+
+  const deletePitch = (id) => {
+    axios
+      .delete(`http://localhost:3001/pitches/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then(() => {
+        history.push("/dashboard/pitches");
+      });
+  };
   return (
     <div>
       <div className=""> {pitchObject.pitchTitle} </div>
@@ -24,6 +40,16 @@ const SingleListing = () => {
       <div className="">{pitchObject.capitalRaised}</div>
       <div className="">{pitchObject.pitchInfo}</div>
       <div className="">Created by: {pitchObject.displayName}</div>
+      {authState.displayName === pitchObject.displayName && (
+        <Button
+          onClick={() => {
+            deletePitch(pitchObject.id);
+          }}
+        >
+          {" "}
+          Delete Pitch
+        </Button>
+      )}
     </div>
   );
 };
