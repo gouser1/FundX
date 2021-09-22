@@ -11,7 +11,7 @@ export default makeStyles(() => ({
   },
   button: {
     fontFamily: "'Karla', sans-serif;",
-    fontSize: "1.2em",
+    fontSize: "1em",
     color: "white",
     backgroundColor: "#3bc693",
     "&:hover": {
@@ -22,11 +22,11 @@ export default makeStyles(() => ({
   h1: {
     textAlign: "center",
     fontFamily: "'Karla', sans-serif;",
-    fontSize: "2.2em",
+    fontSize: "1.5em",
     color: "#22303d",
     fontWeight: "700",
     "@media (min-width:700px)": {
-      fontSize: "4rem",
+      fontSize: "2.5rem",
     },
   },
   h2: {

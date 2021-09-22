@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     profilePicture: {
       type: DataTypes.INTEGER,
     },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'User',
+    },
   });
 
   Users.assoicate = (models) => {

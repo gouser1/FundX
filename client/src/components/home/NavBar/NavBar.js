@@ -86,7 +86,7 @@ function NavBar(props) {
                   <IconButton
                     edge="start"
                     className={classes.menuButton}
-                    color="#46637f"
+                    color="primary"
                     aria-label="menu"
                     onClick={handleMenu}
                   >
@@ -127,42 +127,10 @@ function NavBar(props) {
                         </MenuItem>
                       </>
                     )}
-                    <MenuItem onClick={() => handleMenuClick("/")}>
-                      Features
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuClick("/")}>
-                      FAQs
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuClick("/")}>
-                      About
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuClick("/")}>
-                      Support
-                    </MenuItem>
                   </Menu>
                 </>
               ) : (
                 <div className={classes.navOptions}>
-                  <Box m={1} pt={2}>
-                    <NavButton onClick={() => handleButtonClick("/")}>
-                      Features
-                    </NavButton>
-                  </Box>
-                  <Box m={1} pt={2}>
-                    <NavButton onClick={() => handleButtonClick("/")}>
-                      FAQs
-                    </NavButton>
-                  </Box>
-                  <Box m={1} pt={2}>
-                    <NavButton onClick={() => handleButtonClick("/")}>
-                      About
-                    </NavButton>
-                  </Box>
-                  <Box m={1} pt={2} display="flex" flexGrow={1}>
-                    <NavButton onClick={() => handleButtonClick("/")}>
-                      Support
-                    </NavButton>
-                  </Box>
                   {!authState && (
                     <>
                       <Box m={1} pt={2}>

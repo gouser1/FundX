@@ -60,17 +60,15 @@ const Register = (props) => {
         spacing={0}
         direction='column'
         alignItems='center'
-        justify='center'
+        justifyContent='center'
         style={{ minHeight: '100vh' }}
       >
-        <LogoButton to='/' style={{ backgroundColor: 'transparent' }}>
-          <img
-            src={LogoNav}
-            alt=''
-            width='130px'
-            height='35px'
-            onClick={() => handleLinkClick('/')}
-          />
+        <LogoButton
+          to='/'
+          style={{ backgroundColor: 'transparent' }}
+          onClick={() => handleLinkClick('/')}
+        >
+          <img src={LogoNav} alt='' width='130px' height='35px' />
         </LogoButton>
         <Paper elevation={10} className={classes.paper2}>
           <Formik
@@ -80,7 +78,7 @@ const Register = (props) => {
               axios
                 .post('http://localhost:3001/auth', values)
                 .then((response) => {
-                  history.push('/confirmemail');
+                  history.push('/login');
                 });
             }}
           >
@@ -167,6 +165,7 @@ const Register = (props) => {
                 <Textfield
                   name='password'
                   type='password'
+                  autocomplete='off'
                   label={
                     <Typography className={classes.textfield}>
                       Password
@@ -206,7 +205,10 @@ const Register = (props) => {
           </Typography>
           <Box pt={2}>
             <Typography className={classes.textfield}>
-              <Link href='#' style={{ textDecoration: 'none' }}>
+              <Link
+                onClick={() => handleLinkClick('/dashboard/pitches')}
+                style={{ textDecoration: 'none' }}
+              >
                 Continue as a guest.
               </Link>
             </Typography>

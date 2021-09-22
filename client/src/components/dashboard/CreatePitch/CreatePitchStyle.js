@@ -22,16 +22,18 @@ export default makeStyles(() => ({
   h1: {
     textAlign: "center",
     fontFamily: "'Karla', sans-serif;",
-    fontSize: "2.2em",
+    fontSize: "1.5em",
     color: "#22303d",
     fontWeight: "700",
     "@media (min-width:700px)": {
-      fontSize: "4rem",
+      fontSize: "2rem",
     },
   },
   h2: {
     fontFamily: "'Rubik', sans-serif;",
-    fontSize: "1em",
+    fontSize: "0.9em",
     color: "black",
+    fontWeight: "700",
+    marginTop: "2%",
   },
 }));

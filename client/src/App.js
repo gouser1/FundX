@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+
 import NavBar from './components/home/NavBar/NavBar';
 import Hero from './components/home/Hero/Hero';
 import Features from './components/home/Features/Features';

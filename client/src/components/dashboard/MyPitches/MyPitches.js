@@ -9,7 +9,6 @@ import {
   CardContent,
   CardHeader,
   Badge,
-  IconButton,
   CardMedia,
   CardActions,
   Button as NormalButton,
@@ -17,17 +16,20 @@ import {
 import axios from "axios";
 import Location from "@material-ui/icons/LocationOn";
 import cardImage from "../../../images/dashboard/placeholder.jpg";
-import Favorite from "@material-ui/icons/Favorite";
 import userIcon from "../../../images/dashboard/usericon.png";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../../../helpers/AuthContext";
-import useStyles from "./FavouritesStyle";
+import useStyles from "./MyPitchesStyle";
 
-const Favourites = () => {
+function Alert(props) {}
+
+const MyPitches = () => {
   let history = useHistory();
   const classes = useStyles();
-  const [favouritedPitches, setFavouritedPitches] = useState([]);
+  const [usersPitches, setUsersPitches] = useState([]);
   const [isSet, setIsSet] = useState(false);
+
+  const [openDeleteSnackBar, setOpenDeleteSnackBar] = React.useState(false);
 
   const [authState, setAuthState] = useState({
     displayName: "",
@@ -37,42 +39,48 @@ const Favourites = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/favourite/userfavourites", {
+      .get("http://localhost:3001/pitches/userspitches", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        setFavouritedPitches(response.data);
+        setUsersPitches(response.data);
         setIsSet(true);
         console.log(response.data);
       });
     if (!localStorage.getItem("accessToken")) {
       history.push("/login");
     }
-  }, [history]);
+  }, []);
 
-  const favouritePitch = (pitchId) => {
+  const deletePitch = (id) => {
     axios
-      .post(
-        "http://localhost:3001/favourite",
-        { PitchId: pitchId },
-        { headers: { accessToken: localStorage.getItem("accessToken") } }
-      )
+      .delete(`http://localhost:3001/pitches/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
       .then((response) => {
-        if (!response.data.favourited) {
-          const newListOfFavouritedPitches = favouritedPitches.filter(function (
-            el
-          ) {
-            return el.PitchId !== pitchId;
-          });
-          setFavouritedPitches([...newListOfFavouritedPitches]);
+        if (response.status === 200) {
+          history.go(0);
         }
       });
   };
+
+  const handleDeleteSnackBar = () => {
+    setOpenDeleteSnackBar(true);
+  };
+
+  const handleDeleteSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenDeleteSnackBar(false);
+  };
+
   if (isSet) {
-    if (favouritedPitches.length === 0) {
+    if (usersPitches.length === 0) {
       return (
         <div className={classes.root}>
-          {" "}
           <Grid
             container
             justify="center"
@@ -84,7 +92,7 @@ const Favourites = () => {
                   className={classes.h1}
                   style={{ paddingBottom: "5%" }}
                 >
-                  You have no favourited pitches
+                  You have no pitches
                 </Typography>
               </Container>
             </Grid>
@@ -106,10 +114,10 @@ const Favourites = () => {
                     className={classes.h1}
                     style={{ paddingBottom: "5%" }}
                   >
-                    Your Favourites
+                    Your Pitches
                   </Typography>
                   <Grid container spacing={3}>
-                    {favouritedPitches.map((value, key) => {
+                    {usersPitches.map((value, key) => {
                       return (
                         <Grid item xs={12} md={4} lg={4}>
                           <Paper className={classes.paper}>
@@ -117,7 +125,7 @@ const Favourites = () => {
                               <CardContent>
                                 <CardHeader
                                   avatar={
-                                    <Link to={`profile/${value.Pitch.UserId}`}>
+                                    <Link to={`profile/${value.UserId}`}>
                                       <Avatar>
                                         <img
                                           src={userIcon}
@@ -129,11 +137,10 @@ const Favourites = () => {
                                     </Link>
                                   }
                                   titleTypographyProps={{ variant: "h6" }}
-                                  title={value.Pitch.pitchTitle}
+                                  title={value.pitchTitle}
                                   subheader={
                                     <Badge className={classes.badge}>
-                                      {value.Pitch.location},{" "}
-                                      {value.Pitch.country}
+                                      {value.location}, {value.country}
                                       <Location />{" "}
                                     </Badge>
                                   }
@@ -146,12 +153,9 @@ const Favourites = () => {
                                   className={classes.p1}
                                   style={{ marginTop: "3%" }}
                                 >
-                                  {value.Pitch.pitchInfo.length > 100
-                                    ? `${value.Pitch.pitchInfo.substring(
-                                        0,
-                                        100
-                                      )}...`
-                                    : value.Pitch.pitchInfo}
+                                  {value.pitchInfo.length > 100
+                                    ? `${value.pitchInfo.substring(0, 100)}...`
+                                    : value.pitchInfo}
                                 </Typography>
                                 <div
                                   style={{
@@ -164,26 +168,26 @@ const Favourites = () => {
                                     className={classes.p1}
                                     style={{ marginTop: "3%" }}
                                   >
-                                    Amount raised: £{value.Pitch.capitalRaised}
+                                    Amount raised: £{value.capitalRaised}
                                   </Typography>
 
                                   <Typography
                                     className={classes.p1}
                                     style={{ marginTop: "3%" }}
                                   >
-                                    Amount needed: £{value.Pitch.capitalNeeded}
+                                    Amount needed: £{value.capitalNeeded}
                                   </Typography>
                                 </div>
                                 <Typography
                                   className={classes.p1}
                                   style={{ marginTop: "3%", fontSize: "0.9em" }}
                                 >
-                                  Industry: {value.Pitch.industry}
+                                  Industry: {value.industry}
                                   {""}
-                                  {value.Pitch.industry && value.Pitch.industry2
+                                  {value.industry && value.industry2
                                     ? ","
                                     : ""}{" "}
-                                  {value.Pitch.industry2}
+                                  {value.industry2}
                                 </Typography>
                               </CardContent>
 
@@ -199,7 +203,7 @@ const Favourites = () => {
                                   style={{ marginTop: "3%" }}
                                   onClick={() => {
                                     history.push(
-                                      `/dashboard/pitch/${value.Pitch.id}`
+                                      `/dashboard/pitch/${value.id}`
                                     );
                                   }}
                                 >
@@ -207,32 +211,21 @@ const Favourites = () => {
                                     More Info
                                   </Typography>
                                 </NormalButton>
-
-                                <IconButton
-                                  aria-label="add to favorites"
+                                <NormalButton
+                                  size="small"
+                                  className={classes.button}
+                                  style={{
+                                    marginTop: "3%",
+                                    backgroundColor: "#f44336",
+                                  }}
                                   onClick={() => {
-                                    favouritePitch(value.Pitch.id);
+                                    deletePitch(value.id);
                                   }}
                                 >
-                                  <Favorite
-                                    style={{
-                                      color: favouritedPitches.includes(
-                                        value.Pitch.id
-                                      )
-                                        ? "#f44336"
-                                        : "#f44336",
-                                    }}
-                                    className={
-                                      favouritedPitches.includes(value.Pitch.id)
-                                        ? "unfavouriteButton"
-                                        : "FavouriteButton"
-                                    }
-                                  />
-                                  <Typography
-                                    className={classes.h1}
-                                    style={{}}
-                                  ></Typography>
-                                </IconButton>
+                                  <Typography style={{ color: "white" }}>
+                                    Delete
+                                  </Typography>
+                                </NormalButton>
                               </CardActions>
                             </Card>
                           </Paper>
@@ -252,4 +245,4 @@ const Favourites = () => {
   }
 };
 
-export default Favourites;
+export default MyPitches;

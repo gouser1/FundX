@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
   },
   button: {
     fontFamily: "'Karla', sans-serif;",
-    fontSize: "1.2em",
+    fontSize: "1.1em",
     color: "white",
     backgroundColor: "#3bc693",
     "&:hover": {
@@ -19,10 +19,20 @@ export default makeStyles((theme) => ({
     },
     textTransform: "none",
   },
-  container: {
-    paddingTop: "5vh",
-    backgroundColor: "white",
-    color: "#555",
+  p1: {
+    textAlign: "left",
+    fontFamily: "'Rubik', sans-serif;",
+    fontSize: "1em",
+    color: "#22303d",
+    letterSpacing: "0.02em",
+    lineHeight: "1.4em",
+    "@media (max-width:700px)": {
+      fontSize: "1rem",
+      textAlign: "center",
+    },
+    "@media (max-width:1400px)": {
+      fontSize: "1rem",
+    },
   },
   h1: {
     textAlign: "center",
@@ -31,25 +41,32 @@ export default makeStyles((theme) => ({
     color: "#22303d",
     fontWeight: "700",
     "@media (min-width:700px)": {
-      fontSize: "4rem",
+      fontSize: "2rem",
     },
   },
   h2: {
-    fontFamily: "'Rubik', sans-serif;",
-    fontSize: "1.2em",
+    fontFamily: "'Karla', sans-serif;",
+    fontSize: "1.6em",
+    fontWeight: "700",
     color: "#46637f",
-    "@media (min-width:700px)": {
+    "@media (max-width:700px)": {
       fontSize: "1.6rem",
+      textAlign: "center",
     },
   },
   favourite: {
     color: "green",
   },
+
   badge: {
     marginRight: "5em",
   },
   card: {
     marginBottom: theme.spacing(5),
+    maxHeight: "820px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   media: {
     height: 250,

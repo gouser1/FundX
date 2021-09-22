@@ -14,18 +14,19 @@ export default makeStyles((theme) => ({
     fontSize: "1.2em",
     color: "white",
     backgroundColor: "#3bc693",
-
     "&:hover": {
       backgroundColor: "#34b384",
     },
     textTransform: "none",
   },
   h1: {
+    textAlign: "center",
     fontFamily: "'Karla', sans-serif;",
+    fontSize: "2.2em",
     color: "#22303d",
-    fontWeight: "500",
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "18px",
+    fontWeight: "700",
+    "@media (min-width:700px)": {
+      fontSize: "2rem",
     },
   },
   h2: {
@@ -60,9 +61,9 @@ export default makeStyles((theme) => ({
   containerItem: {
     display: "flex",
     alignItems: "center",
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(4),
     [theme.breakpoints.up("sm")]: {
-      marginBottom: theme.spacing(4),
+      marginBottom: theme.spacing(3),
       cursor: "pointer",
     },
   },

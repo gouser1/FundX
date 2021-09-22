@@ -40,14 +40,16 @@ function Hero(props) {
         >
           <Grid item lg={6} md={10} sm={10} xs={12}>
             <Box textAlign="center">
-              <h1 className={classes.h1}>Lorem ipsum dolor sit amet</h1>
+              <h1 className={classes.h1}>
+                Begin your investment adventure today!
+              </h1>
             </Box>
           </Grid>
           <Grid item lg={12} md={10} sm={10} xs={12}>
             <Box textAlign="center">
               <h2 className={classes.h2}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Whether you are looking for investment or looking to invest.
+                FundX has what you need.
               </h2>
             </Box>
           </Grid>

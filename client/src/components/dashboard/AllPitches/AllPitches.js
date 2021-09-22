@@ -6,50 +6,80 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
+  Box,
   CardActions,
   Badge,
-  Button,
   Grid,
   Typography,
-  Container,
   Paper,
+  Container,
+  Button as NormalButton,
 } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import ArrowBack from "@material-ui/icons/ArrowBackIos";
+import { useHistory, Link } from "react-router-dom";
 import Favorite from "@material-ui/icons/Favorite";
 import Location from "@material-ui/icons/LocationOn";
+import industries from "../../../data/industries.json";
 import cardImage from "../../../images/dashboard/placeholder.jpg";
 import userIcon from "../../../images/dashboard/usericon.png";
-import useStyles from "./ProfileStyle";
+import countries from "../../../data/countriesFilter.json";
+import { Formik, Form } from "formik";
+import Select from "../../FormsUI/Select/index";
+import Button from "../../FormsUI/Button/index";
+import useStyles from "./AllPitchesStyle";
 
-function Profile(props) {
-  let { id } = useParams();
-  let history = useHistory();
-  const goBack = () => {
-    history.goBack();
-  };
-  const classes = useStyles();
-  const [displayName, setDisplayName] = useState("");
+const AllPitches = () => {
   const [listOfPitches, setListOfPitches] = useState([]);
   const [favouritedPitches, setFavouritedPitches] = useState([]);
+  let history = useHistory();
+  const classes = useStyles();
 
   useEffect(() => {
+    getListOfPitches();
+  }, []);
+
+  const getListOfPitches = () => {
     axios
-      .get(`http://localhost:3001/auth/userinfo/`, {
+      .get("http://localhost:3001/pitches", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        setDisplayName(response.data.displayName);
+        setListOfPitches(response.data.pitchList);
       });
+  };
+
+  const getFilteredListOfPitches = (data) => {
+    let country = data.country === "All" ? "" : data.country;
+    let industry = data.industry;
 
     axios
-      .get(`http://localhost:3001/pitches/byuserId/${id}`)
+      .get(
+        `http://localhost:3001/pitches/?country=${country}&industry=${encodeURIComponent(
+          industry
+        )}`,
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      )
       .then((response) => {
-        setListOfPitches(response.data);
+        setListOfPitches(response.data.pitchList);
       });
-  }, [id]);
+  };
+
+  const sortByLargestCapitalNeeded = () => {
+    let newListOfPitches = listOfPitches.sort(
+      (a, b) => b.capitalNeeded - a.capitalNeeded
+    );
+    setListOfPitches([...newListOfPitches]);
+  };
+
+  const sortBySmallestCapitalNeeded = () => {
+    let newListOfPitches = listOfPitches.sort(
+      (a, b) => a.capitalNeeded - b.capitalNeeded
+    );
+    setListOfPitches([...newListOfPitches]);
+  };
 
   const favouritePitch = (pitchId) => {
     axios
@@ -88,22 +118,95 @@ function Profile(props) {
         }
       });
   };
+
+  const INITIAL_FORM_STATE = {
+    country: "",
+    industry: "",
+  };
+
   return (
     <div className={classes.root}>
-      <Button size="small" onClick={goBack} className={classes.button} style={{margin: "2%"}}>
-        <ArrowBack color="white" />
-        Back
-      </Button>
       <Grid
         container
-        justify="center"
+        justifyContent="center"
         style={{ minHeight: "100vh", maxWidth: "100%" }}
       >
         <Grid item xs={12} style={{ paddingTop: "2%" }}>
           <Container maxWidth="lg">
-            <Typography className={classes.h1} style={{ paddingBottom: "5%" }}>
-              {displayName}'s Pitches
-            </Typography>
+            <Formik
+              initialValues={INITIAL_FORM_STATE}
+              onSubmit={(data) => {
+                getFilteredListOfPitches(data);
+              }}
+            >
+              <Form>
+                <Typography
+                  className={classes.h1}
+                  style={{ paddingBottom: "5%" }}
+                >
+                  All Pitches
+                </Typography>
+                <Typography
+                  className={classes.p1}
+                  style={{ paddingBottom: "1%" }}
+                >
+                  Industries
+                </Typography>
+                <Select name="industry" options={industries}></Select>
+                <Typography
+                  className={classes.p1}
+                  style={{ paddingBottom: "1%", paddingTop: "1%" }}
+                >
+                  Countries
+                </Typography>
+                <Select
+                  name="country"
+                  options={countries}
+                  style={{ paddingBottom: "2%" }}
+                ></Select>
+                <Button className={classes.button}>
+                  <Typography className={classes.p1} style={{ color: "white" }}>
+                    Go!
+                  </Typography>
+                </Button>
+                <NormalButton
+                  className={classes.button}
+                  style={{ backgroundColor: "#f44336", marginLeft: "1%" }}
+                  onClick={() => {
+                    getListOfPitches();
+                  }}
+                >
+                  <Typography style={{ color: "white" }}>Reset</Typography>
+                </NormalButton>
+              </Form>
+            </Formik>
+            <Box
+              style={{ marginTop: "2%", marginBottom: "5%", display: "flex" }}
+            >
+              <NormalButton
+                style={{ marginRight: "2%" }}
+                size="small"
+                color="primary"
+                variant="outlined"
+                className={classes.buttonOutline}
+                onClick={() => {
+                  sortByLargestCapitalNeeded();
+                }}
+              >
+                Largest Capital Needed
+              </NormalButton>
+              <NormalButton
+                size="small"
+                color="primary"
+                variant="outlined"
+                className={classes.buttonOutline}
+                onClick={() => {
+                  sortBySmallestCapitalNeeded();
+                }}
+              >
+                Smallest Capital Needed
+              </NormalButton>
+            </Box>
             <Grid container spacing={3}>
               {listOfPitches.map((value, key) => {
                 return (
@@ -113,14 +216,16 @@ function Profile(props) {
                         <CardContent>
                           <CardHeader
                             avatar={
-                              <Avatar>
-                                <img
-                                  src={userIcon}
-                                  alt=""
-                                  width="50px"
-                                  height="35px"
-                                />
-                              </Avatar>
+                              <Link to={`profile/${value.UserId}`}>
+                                <Avatar>
+                                  <img
+                                    src={userIcon}
+                                    alt=""
+                                    width="50px"
+                                    height="35px"
+                                  />
+                                </Avatar>
+                              </Link>
                             }
                             titleTypographyProps={{ variant: "h6" }}
                             title={value.pitchTitle}
@@ -166,9 +271,12 @@ function Profile(props) {
                           </div>
                           <Typography
                             className={classes.p1}
-                            style={{ marginTop: "3%" }}
+                            style={{ marginTop: "3%", fontSize: "0.9em" }}
                           >
                             Industry: {value.industry}
+                            {""}
+                            {value.industry && value.industry2 ? "," : ""}{" "}
+                            {value.industry2}
                           </Typography>
                         </CardContent>
 
@@ -178,7 +286,7 @@ function Profile(props) {
                             justifyContent: "space-between",
                           }}
                         >
-                          <Button
+                          <NormalButton
                             size="small"
                             className={classes.button}
                             style={{ marginTop: "3%" }}
@@ -189,7 +297,8 @@ function Profile(props) {
                             <Typography style={{ color: "white" }}>
                               More Info
                             </Typography>
-                          </Button>
+                          </NormalButton>
+
                           <IconButton
                             aria-label="add to favorites"
                             onClick={() => {
@@ -208,6 +317,7 @@ function Profile(props) {
                                   : "FavouriteButton"
                               }
                             />
+
                             <Typography>{value.Favourites.length}</Typography>
                           </IconButton>
                         </CardActions>
@@ -222,6 +332,6 @@ function Profile(props) {
       </Grid>
     </div>
   );
-}
+};
 
-export default Profile;
+export default AllPitches;

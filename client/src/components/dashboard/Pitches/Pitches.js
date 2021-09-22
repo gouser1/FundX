@@ -11,6 +11,7 @@ import {
   Button,
   Grid,
   Typography,
+  Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -26,8 +27,29 @@ import useStyles from "./PitchesStyle";
 const Pitches = () => {
   const [listOfPitches, setListOfPitches] = useState([]);
   const [favouritedPitches, setFavouritedPitches] = useState([]);
+  const [selected, setSelected] = useState(0);
   let history = useHistory();
   const classes = useStyles();
+
+  const handleNextPitch = () => {
+    setSelected((prev) => {
+      if (prev === listOfPitches.length - 1) {
+        return 0;
+      } else {
+        return prev + 1;
+      }
+    });
+  };
+
+  const handlePreviousPitch = () => {
+    setSelected((prev) => {
+      if (prev === 0) {
+        return listOfPitches.length - 1;
+      } else {
+        return prev - 1;
+      }
+    });
+  };
 
   useEffect(() => {
     axios
@@ -36,12 +58,7 @@ const Pitches = () => {
       })
       .then((response) => {
         setListOfPitches(response.data.pitchList);
-        // list of favourited posts favourited by current user
-        setFavouritedPitches(
-          response.data.favouritedPitches.map((favourite) => {
-            return favourite.PitchId;
-          })
-        );
+        setSelected(Math.floor(Math.random() * response.data.pitchList.length));
       });
   }, []);
 
@@ -85,104 +102,168 @@ const Pitches = () => {
 
   return (
     <div>
-      {listOfPitches.map((value, pos) => {
-        return (
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justify="center"
-            style={{ minHeight: "100vh" }}
-          >
-            {" "}
-            <Grid item xs={10} md={4}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <CardHeader
-                    avatar={
-                      <Link to={`profile/${value.UserId}`}>
-                        <Avatar>
-                          <img
-                            src={userIcon}
-                            alt=""
-                            width="50px"
-                            height="35px"
-                          />
-                        </Avatar>
-                      </Link>
-                    }
-                    title={value.pitchTitle}
-                    subheader={
-                      <Badge className={classes.badge}>
-                        {value.location}, {value.country}
-                        <Location />{" "}
-                      </Badge>
-                    }
-                  />
-                  <CardMedia className={classes.media} image={cardImage} />
+      {listOfPitches.length > 0 ? (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: "100vh" }}
+        >
+          {" "}
+          <Grid item xs={11} sm={10} md={6} lg={4}>
+            <Card className={classes.card}>
+              <CardContent>
+                <CardHeader
+                  avatar={
+                    <Link to={`profile/${listOfPitches[selected].UserId}`}>
+                      <Avatar>
+                        <img src={userIcon} alt="" width="50px" height="35px" />
+                      </Avatar>
+                    </Link>
+                  }
+                  titleTypographyProps={{ variant: "h6" }}
+                  title={listOfPitches[selected].pitchTitle}
+                  subheader={
+                    <Badge className={classes.badge}>
+                      {listOfPitches[selected].location},{" "}
+                      {listOfPitches[selected].country}
+                      <Location />{" "}
+                    </Badge>
+                  }
+                />
+                <CardMedia className={classes.media} image={cardImage} />
+                <Hidden lgUp>
                   <Typography
-                    classname={classes.p1}
+                    className={classes.p1}
                     style={{ marginTop: "3%" }}
                   >
-                    {value.pitchInfo}
+                    {listOfPitches[selected].pitchInfo.length > 100
+                      ? `${listOfPitches[selected].pitchInfo.substring(
+                          0,
+                          100
+                        )}...`
+                      : listOfPitches[selected].pitchInfo}
                   </Typography>
-                </CardContent>
-
-                <CardActions
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Button
-                    size="small"
-                    className={classes.button}
+                </Hidden>
+                <Hidden mdDown>
+                  <Typography
+                    className={classes.p1}
                     style={{ marginTop: "3%" }}
-                    onClick={() => {
-                      history.push(`/dashboard/pitch/${value.id}`);
-                    }}
                   >
-                    Find Out More{" "}
-                  </Button>
-                  <IconButton aria-label="add to favorites">
-                    <Favorite
-                      className={
-                        favouritedPitches.includes(value.id)
-                          ? "unfavouriteButton"
-                          : "FavouriteButton"
-                      }
-                      onClick={() => {
-                        favouritePitch(value.id);
-                      }}
-                    />
-                    <Typography classname={classes.h1} style={{}}>
-                      {value.Favourites.length}
-                    </Typography>
-                  </IconButton>
-                </CardActions>
+                    {listOfPitches[selected].pitchInfo.length > 300
+                      ? `${listOfPitches[selected].pitchInfo.substring(
+                          0,
+                          300
+                        )}...`
+                      : listOfPitches[selected].pitchInfo}
+                  </Typography>
+                </Hidden>
 
-                <Grid
-                  item
+                <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    margin: "2%",
+                    paddingTop: "1em",
                   }}
                 >
-                  <Button>
-                    <ArrowBack color="primary" />
-                    <p1 className={classes.p1}>Previous Pitch</p1>
-                  </Button>
-                  <Button>
-                    <p1 className={classes.p1} style={{ paddingRight: "5px" }}>
-                      Next Pitch
-                    </p1>
-                    <ArrowForward color="primary" />
-                  </Button>
-                </Grid>
-              </Card>
-            </Grid>
+                  <Typography
+                    className={classes.p1}
+                    style={{ marginTop: "3%" }}
+                  >
+                    Amount raised: £{listOfPitches[selected].capitalRaised}
+                  </Typography>
+
+                  <Typography
+                    className={classes.p1}
+                    style={{ marginTop: "3%" }}
+                  >
+                    Amount needed: £{listOfPitches[selected].capitalNeeded}
+                  </Typography>
+                </div>
+                <Typography className={classes.p1} style={{ marginTop: "3%" }}>
+                  Industry: {listOfPitches[selected].industry}
+                </Typography>
+              </CardContent>
+
+              <CardActions
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Button
+                  size="small"
+                  className={classes.button}
+                  style={{ marginTop: "3%", marginLeft: "2%" }}
+                  onClick={() => {
+                    history.push(
+                      `/dashboard/pitch/${listOfPitches[selected].id}`
+                    );
+                  }}
+                >
+                  <Typography style={{ color: "white" }}>More Info</Typography>
+                </Button>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => {
+                    favouritePitch(listOfPitches[selected].id);
+                  }}
+                >
+                  <Favorite
+                    style={{
+                      color: favouritedPitches.includes(
+                        listOfPitches[selected].id
+                      )
+                        ? "#f44336"
+                        : "#f44336",
+                    }}
+                    className={
+                      favouritedPitches.includes(listOfPitches[selected].id)
+                        ? "unfavouriteButton"
+                        : "FavouriteButton"
+                    }
+                  />
+                  <Typography>
+                    {listOfPitches[selected].Favourites.length}
+                  </Typography>
+                </IconButton>
+              </CardActions>
+
+              <Grid
+                item
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  margin: "2%",
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    handlePreviousPitch();
+                  }}
+                >
+                  <ArrowBack color="primary" />
+                  <Typography className={classes.p1}>Previous Pitch</Typography>
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleNextPitch();
+                  }}
+                >
+                  <Typography
+                    className={classes.p1}
+                    style={{ paddingRight: "5px" }}
+                  >
+                    Next Pitch
+                  </Typography>
+                  <ArrowForward color="primary" />
+                </Button>
+              </Grid>
+            </Card>
           </Grid>
-        );
-      })}
+        </Grid>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

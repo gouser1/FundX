@@ -45,11 +45,14 @@ export default makeStyles((theme) => ({
     },
   },
   h2: {
-    fontFamily: "'Rubik', sans-serif;",
-    fontSize: "0.9em",
-    color: "black",
+    fontFamily: "'Karla', sans-serif;",
+    fontSize: "1.6em",
     fontWeight: "700",
-    marginTop: "2%",
+    color: "#46637f",
+    "@media (max-width:700px)": {
+      fontSize: "1.6rem",
+      textAlign: "center",
+    },
   },
   favourite: {
     color: "green",
@@ -59,7 +62,7 @@ export default makeStyles((theme) => ({
   },
   card: {
     marginBottom: theme.spacing(5),
-    maxHeight: "620px",
+
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",

@@ -3,8 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
-  FormControlLabel,
-  Checkbox,
   Typography,
   InputAdornment,
   Box,
@@ -75,7 +73,7 @@ const Login = (props) => {
         spacing={0}
         direction='column'
         alignItems='center'
-        justify='center'
+        justifyContent='center'
         style={{ minHeight: '100vh' }}
       >
         <LogoButton
@@ -99,6 +97,7 @@ const Login = (props) => {
               <Box pb={3}>
                 <TextField
                   name='email'
+                  fullWidth
                   label={
                     <Typography className={classes.textfield}>Email</Typography>
                   }
@@ -117,6 +116,7 @@ const Login = (props) => {
               <TextField
                 name='password'
                 type='password'
+                fullWidth
                 label={
                   <Typography className={classes.textfield}>
                     Password
@@ -133,14 +133,7 @@ const Login = (props) => {
                   ),
                 }}
               />
-              <FormControlLabel
-                control={<Checkbox name='checkedB' color='primary' />}
-                label={
-                  <Typography className={classes.Textfield}>
-                    Remember me
-                  </Typography>
-                }
-              />
+
               <Button
                 onClick={loginSubmit}
                 type='submit'
@@ -156,15 +149,6 @@ const Login = (props) => {
           <Typography className={classes.textfield}>
             <Link
               href='#'
-              onClick={() => handleLinkClick('/recoverpassword')}
-              style={{ textDecoration: 'none' }}
-            >
-              Forgot password?
-            </Link>
-          </Typography>
-          <Typography className={classes.textfield}>
-            <Link
-              href='#'
               onClick={() => handleLinkClick('/register')}
               style={{ textDecoration: 'none' }}
             >
@@ -175,7 +159,7 @@ const Login = (props) => {
             <Typography className={classes.textfield}>
               <Link
                 href='#'
-                onClick={() => handleLinkClick('/')}
+                onClick={() => handleLinkClick('/dashboard/pitches')}
                 style={{ textDecoration: 'none' }}
               >
                 Continue as a guest.

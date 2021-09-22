@@ -19,6 +19,16 @@ export default makeStyles((theme) => ({
     },
     textTransform: "none",
   },
+  buttonOutline: {
+    fontFamily: "'Karla', sans-serif;",
+    fontSize: "1.1em",
+    fontWeight: "500",
+    color: "#3bc693",
+    "&:hover": {
+      backgroundColor: "#ebfff7",
+    },
+    textTransform: "none",
+  },
   p1: {
     textAlign: "left",
     fontFamily: "'Rubik', sans-serif;",
@@ -45,11 +55,14 @@ export default makeStyles((theme) => ({
     },
   },
   h2: {
-    fontFamily: "'Rubik', sans-serif;",
-    fontSize: "0.9em",
-    color: "black",
+    fontFamily: "'Karla', sans-serif;",
+    fontSize: "1.6em",
     fontWeight: "700",
-    marginTop: "2%",
+    color: "#46637f",
+    "@media (max-width:700px)": {
+      fontSize: "1.6rem",
+      textAlign: "center",
+    },
   },
   favourite: {
     color: "green",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Grid, Box, Button } from "@material-ui/core";
+import { Grid, Box, Button, Typography } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import useStyles from "./HeroStyle";
 import { AuthContext } from "../../../helpers/AuthContext";
@@ -42,17 +42,17 @@ function Hero(props) {
         >
           <Grid item lg={6} md={10} sm={10} xs={12}>
             <Box textAlign="center" pt={10}>
-              <h1 className={classes.h1}>
+              <Typography className={classes.h1}>
                 Providing Unique Value to Entrepreneurs and Investors
-              </h1>
+              </Typography>
             </Box>
           </Grid>
           <Grid item lg={6} md={10} sm={10} xs={12}>
             <Box textAlign="center">
-              <h2 className={classes.h2}>
+              <Typography className={classes.h2}>
                 We are an Angel-led Investment platform that connects high grow
                 potentional companies with experienced investors.
-              </h2>
+              </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>

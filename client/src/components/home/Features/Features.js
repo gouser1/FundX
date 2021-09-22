@@ -1,5 +1,8 @@
 import React from "react";
-import { Grid, Box, Hidden } from "@material-ui/core";
+import { Grid, Box, Hidden, Typography } from "@material-ui/core";
+import GrowthImage from "../../../images/home/growth.svg";
+import ConnectImage from "../../../images/home/connect.svg";
+import MobileImage from "../../../images/home/mobileview.png";
 import useStyles from "./FeaturesStyle";
 
 function Features(props) {
@@ -14,81 +17,77 @@ function Features(props) {
       >
         <Grid item xs={12}>
           <Box className={classes.box} textAlign="center">
-            <h1 className={classes.h1}>How does it work?</h1>
+            <Typography className={classes.h1}>How does it work?</Typography>
           </Box>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Box className={classes.box}>
-            <h2 className={classes.h2}>
-              Providing Unique Value to Entrepreneurs and Investors
-            </h2>
+            <Typography className={classes.h2}>
+              Connecting companies to investors for maximum growth
+            </Typography>
           </Box>
           <Box>
-            <p className={classes.p1}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
-            </p>
+            <Typography className={classes.p1}>
+              FundX makes it simple to connect companies to potential investors,
+              making it easy for you to find the investment you need for your
+              company to grow. Sign up today to create or Pitch or continue as a
+              guest user to explore the wide range of pitches within FundX!
+            </Typography>
           </Box>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Hidden mdDown>
             <Box pt={20} justifyContent="center" display="flex">
-              <img src="https://loremflickr.com/600/300" alt=""></img>
+              <img src={GrowthImage} alt="" width="472px" height="451px" />
             </Box>
           </Hidden>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Hidden mdDown>
             <Box pt={20} justifyContent="center" display="flex">
-              <img src="https://loremflickr.com/600/300" alt=""></img>
+              <img src={MobileImage} alt="" width="472px" height="451px" />
             </Box>
           </Hidden>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Box className={classes.box}>
-            <h2 className={classes.h2}>
-              Providing Unique Value to Entrepreneurs and Investors
-            </h2>
+            <Typography className={classes.h2}>
+              Create and publish your pitch
+            </Typography>
           </Box>
           <Box>
-            <p className={classes.p1}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
-            </p>
+            <Typography className={classes.p1}>
+              Add a pitch for your business using our create a Pitch section.
+              The on-screen tips will guide you through the creation process of
+              your Pitch. We've also got some great resources to help if you get
+              stuck you should check our FAQ and support sections. When your
+              pitch has been created, it will be listed on the site for
+              prospective investors to browse and evaluate. Investors can then
+              contact you if they are interested.
+            </Typography>
           </Box>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Box className={classes.box}>
-            <h2 className={classes.h2}>
-              Providing Unique Value to Entrepreneurs and Investors
-            </h2>
+            <Typography className={classes.h2}>
+              Explore pitches and store them for later
+            </Typography>
           </Box>
           <Box>
-            <p className={classes.p1}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
-            </p>
+            <Typography className={classes.p1}>
+              Our main pitches section of FundX allows you to randomly search
+              through the pitches to find something unique you may not have been
+              looking for. You can also view all the pitches and sort through
+              them to find a pitch tailored for your interest. Favouriting the
+              pitches will store them in your Favourites in case you want to
+              come back to it later on.
+            </Typography>
           </Box>
         </Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Hidden mdDown>
             <Box pt={20} justifyContent="center" display="flex">
-              <img src="https://loremflickr.com/600/300" alt=""></img>
+              <img src={ConnectImage} alt="" width="472px" height="451px" />
             </Box>
           </Hidden>
         </Grid>

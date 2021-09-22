@@ -1,55 +1,161 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory, Link } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../../../helpers/AuthContext";
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Badge,
+  Button,
+  Grid,
+  Typography,
+} from "@material-ui/core";
+import ArrowBack from "@material-ui/icons/ArrowBackIos";
+import Location from "@material-ui/icons/LocationOn";
+import cardImage from "../../../images/dashboard/placeholder.jpg";
+import userIcon from "../../../images/dashboard/usericon.png";
+import useStyles from "./SinglePitchStyle";
 
 const SingleListing = () => {
   let { id } = useParams();
-  const [pitchObject, setPitchObject] = useState({});
-  const { authState } = useContext(AuthContext);
-  let history = useHistory();
+  const [singlePitch, setSinglePitch] = useState({});
+  const history = useHistory();
+  const goBack = () => {
+    history.goBack();
+  };
+  const classes = useStyles();
 
   useEffect(() => {
     axios.get(`http://localhost:3001/pitches/byId/${id}`).then((response) => {
-      setPitchObject(response.data);
+      setSinglePitch(response.data);
     });
   }, [id]);
 
-  const deletePitch = (id) => {
-    axios
-      .delete(`http://localhost:3001/pitches/${id}`, {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
-        },
-      })
-      .then(() => {
-        history.push("/dashboard/pitches");
-      });
-  };
   return (
     <div>
-      <div className=""> {pitchObject.pitchTitle} </div>
-      <div className="">{pitchObject.website}</div>
-      <div className="">{pitchObject.location}</div>
-      <div className="">{pitchObject.country}</div>
-      <div className="">{pitchObject.industry}</div>
-      <div className="">{pitchObject.industry2}</div>
-      <div className="">{pitchObject.idealInvestmentRole}</div>
-      <div className="">{pitchObject.capitalNeeded}</div>
-      <div className="">{pitchObject.capitalRaised}</div>
-      <div className="">{pitchObject.pitchInfo}</div>
-      <div className="">Created by: {pitchObject.displayName}</div>
-      {authState.displayName === pitchObject.displayName && (
-        <Button
-          onClick={() => {
-            deletePitch(pitchObject.id);
-          }}
-        >
-          {" "}
-          Delete Pitch
-        </Button>
-      )}
+      <Button size="small" onClick={goBack} className={classes.button}>
+        <ArrowBack color="white" />
+        Back
+      </Button>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
+      >
+        {" "}
+        <Grid item xs={12} sm={10} md={6} lg={10}>
+          <Card className={classes.card}>
+            <CardContent>
+              <CardHeader
+                avatar={
+                  <Link to={`profile/${singlePitch.UserId}`}>
+                    <Avatar>
+                      <img src={userIcon} alt="" width="50px" height="35px" />
+                    </Avatar>
+                  </Link>
+                }
+                titleTypographyProps={{ variant: "h6" }}
+                title={singlePitch.pitchTitle}
+                subheader={
+                  <Badge className={classes.badge}>
+                    {singlePitch.location}, {singlePitch.country}
+                    <Location />{" "}
+                  </Badge>
+                }
+              />
+              <CardMedia className={classes.media} image={cardImage} />
+
+              <Typography className={classes.h2} style={{ marginTop: "3%" }}>
+                Investment Information
+              </Typography>
+
+              <Typography className={classes.p1} style={{ marginTop: "2%" }}>
+                Ideal Investor Role: {singlePitch.idealInvestmentRole}
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                <Typography
+                  className={classes.p1}
+                  style={{ marginTop: "2%", marginRight: "2%" }}
+                >
+                  Amount raised: £{singlePitch.capitalRaised}
+                </Typography>
+
+                <Typography className={classes.p1} style={{ marginTop: "2%" }}>
+                  Amount needed: £{singlePitch.capitalNeeded}
+                </Typography>
+              </div>
+              <Typography className={classes.h2} style={{ marginTop: "3%" }}>
+                About {singlePitch.pitchTitle}
+              </Typography>
+
+              <Typography
+                className={classes.p1}
+                style={{
+                  marginTop: "1%",
+                  fontWeight: "600",
+                }}
+              >
+                Industry
+              </Typography>
+
+              <Typography className={classes.p1} style={{ marginTop: "1%" }}>
+                {singlePitch.industry}
+                {""}
+                {singlePitch.industry && singlePitch.industry2 ? "," : ""}{" "}
+                {singlePitch.industry2}
+              </Typography>
+
+              <Typography
+                className={classes.p1}
+                style={{ marginTop: "2%", fontWeight: "600" }}
+              >
+                Pitch Info
+              </Typography>
+              <Typography className={classes.p1} style={{ marginTop: "1%" }}>
+                {singlePitch.pitchInfo}
+              </Typography>
+              <Typography className={classes.h2} style={{ marginTop: "3%" }}>
+                Contact Information
+              </Typography>
+              <Typography className={classes.p1} style={{ marginTop: "1%" }}>
+                Email: {singlePitch.contactEmail}
+              </Typography>
+
+              <Typography className={classes.p1} style={{ marginTop: "1%" }}>
+                <Link> {singlePitch.website} </Link>
+              </Typography>
+              <Typography className={classes.p1} style={{ marginTop: "1%" }}>
+                Created by: {singlePitch.displayName}
+              </Typography>
+            </CardContent>
+
+            <CardActions
+              style={{ display: "flex", justifyContent: "space-between" }}
+            ></CardActions>
+
+            <Grid
+              item
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "2%",
+              }}
+            >
+              {" "}
+            </Grid>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
   );
 };

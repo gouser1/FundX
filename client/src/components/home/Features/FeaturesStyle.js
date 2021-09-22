@@ -33,9 +33,10 @@ export default makeStyles(() => ({
     },
   },
   p1: {
+    marginTop: "1%",
     textAlign: "left",
     fontFamily: "'Rubik', sans-serif;",
-    fontSize: "1.3em",
+    fontSize: "1.2em",
     color: "#22303d",
     letterSpacing: "0.02em",
     lineHeight: "1.4em",
