@@ -1,10 +1,16 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
 require('dotenv').config();
 
 app.use(express.json());
 app.use(cors());
+
+const cors = require('cors');
+app.use(
+  cors({
+    origin: ' ttps://fundx-jamesgilliland.herokuapp.com',
+  })
+);
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
